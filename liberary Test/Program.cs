@@ -49,7 +49,7 @@ namespace LibraryTest
             Console.WriteLine("List of Borrowers:");
             for (int i = 0; i < borrowers.Count; i++)
             {
-                Console.WriteLine("Name: " + borrowers[i].Name + ", Borrowed Book: " + borrowers[i].BorrowedBook);
+                Console.WriteLine($"Name:  { borrowers[i].Name }  Borrowed Book:  { borrowers[i].BorrowedBook}");
             }
         }
 
@@ -109,7 +109,7 @@ namespace LibraryTest
             Console.WriteLine("List of Books:");
             for (int i = 0; i < books.Count; i++)
             {
-                Console.WriteLine("Title: " + books[i].Title + ", Author: " + books[i].Author + ", Available: " + books[i].IsAvailable);
+                Console.WriteLine($"Title:  { books[i].Title}  Author: { books[i].Author}   Available: { books[i].IsAvailable}");
             }
         }
 
@@ -141,7 +141,7 @@ namespace LibraryTest
             {
                 if (books[i].IsAvailable)
                 {
-                    Console.WriteLine("Title: " + books[i].Title + ", Author: " + books[i].Author);
+                    Console.WriteLine($"Title:  {books[i].Title } Author:  {books[i].Author}");
                     count++;
                 }
             }
@@ -155,17 +155,17 @@ namespace LibraryTest
         {
             for (int i = 0; i < books.Count; i++)
             {
-                if (books[i].Title.ToLower() == bookTitle.ToLower())
+                if (books[i].Title.ToLower().Contains(bookTitle.ToLower()))
                 {
                     if (books[i].IsAvailable)
                     {
                         books[i].IsAvailable = false;
                         borrowerList.AddBorrower(new Borrower(borrowerName, bookTitle));
-                        Console.WriteLine(borrowerName + " borrowed \"" + bookTitle + "\" successfully.");
+                        Console.WriteLine($"{borrowerName} borrowed { bookTitle} successfully.");
                     }
                     else
                     {
-                        Console.WriteLine("The book \"" + bookTitle + "\" is currently not available.");
+                        Console.WriteLine($"The book { bookTitle} is currently not available.");
                     }
                     return;
                 }
@@ -178,7 +178,7 @@ namespace LibraryTest
             List<Borrower> borrowers = borrowerList.GetBorrowers();
             for (int i = 0; i < borrowers.Count; i++)
             {
-                if (borrowers[i].BorrowedBook.ToLower() == bookTitle.ToLower())
+                if (borrowers[i].BorrowedBook.ToLower().Contains(bookTitle.ToLower()))
                 {
                     Borrower borrower = borrowers[i]; 
                     returnedBookList.AddReturnedBook(bookTitle);
@@ -186,13 +186,15 @@ namespace LibraryTest
 
                     for (int j = 0; j < books.Count; j++)
                     {
-                        if (books[j].Title.ToLower() == bookTitle.ToLower())
+                        if (books[j].Title.ToLower().Contains(bookTitle.ToLower()))
                         {
                             books[j].IsAvailable = true;
                             break;
                         }
+                  
                     }
                     Console.WriteLine("Book \"" + bookTitle + "\" has been returned.");
+                    
                     return;
                 }
             }
