@@ -63,14 +63,14 @@ namespace LibraryTest
             return false;
         }
 
-        public void RemoveBorrowerAt(int index)
-        {
-            borrowers.RemoveAt(index);
-        }
-
         public List<Borrower> GetBorrowers()
         {
             return borrowers;
+        }
+        
+        public void RemoveBorrower(Borrower borrower)
+        {
+            borrowers.Remove(borrower);
         }
     }
 
@@ -133,6 +133,24 @@ namespace LibraryTest
             return false;
         }
 
+        public void DisplayAvailableBooks()
+        {
+            Console.WriteLine("Available Books:");
+            int count = 0;
+            for (int i = 0; i < books.Count; i++)
+            {
+                if (books[i].IsAvailable)
+                {
+                    Console.WriteLine("Title: " + books[i].Title + ", Author: " + books[i].Author);
+                    count++;
+                }
+            }
+            if (count == 0)
+            {
+                Console.WriteLine("No books are currently available.");
+            }
+        }
+
         public void BorrowBook(string borrowerName, string bookTitle)
         {
             for (int i = 0; i < books.Count; i++)
@@ -162,8 +180,9 @@ namespace LibraryTest
             {
                 if (borrowers[i].BorrowedBook.ToLower() == bookTitle.ToLower())
                 {
+                    Borrower borrower = borrowers[i]; 
                     returnedBookList.AddReturnedBook(bookTitle);
-                    borrowers.RemoveAt(i);
+                    borrowerList.RemoveBorrower(borrower); 
 
                     for (int j = 0; j < books.Count; j++)
                     {
@@ -207,6 +226,7 @@ namespace LibraryTest
                     myLibrary.DisplayBooks();
                 else if (choice == "2")
                 {
+                    myLibrary.DisplayAvailableBooks(); 
                     Console.Write("Enter your name: ");
                     string name = Console.ReadLine();
                     Console.Write("Enter the book title to borrow: ");
